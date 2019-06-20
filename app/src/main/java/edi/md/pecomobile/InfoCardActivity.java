@@ -1,12 +1,15 @@
 package edi.md.pecomobile;
 
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -20,6 +23,7 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.jar.Attributes;
 
+import edi.md.pecomobile.ContractDetail.AssortimentList;
 import edi.md.pecomobile.NetworkUtils.ContractInfo.CardsList;
 import edi.md.pecomobile.NetworkUtils.ContractInfo.Contract;
 import edi.md.pecomobile.NetworkUtils.ContractInfo.ContractInfo;
@@ -147,6 +151,13 @@ public class InfoCardActivity extends AppCompatActivity {
                             arrayProductList.add(product);
                         }
 
+                        Fragment asortment = new AssortimentList();
+                        if (asortment!=null){
+                            Bundle bundle = new Bundle();
+                            bundle.putString("pdf", "pdf");
+                            bundle.putString("flag", "0");
+                            asortment.setArguments(bundle);
+                        }
                         txtBalanceContract.setText(String.format("%.2f",CardsBalance));
                         txtCodContract.setText(Code);
                         txtValidFrom.setText(DateValidFrom);
@@ -164,6 +175,7 @@ public class InfoCardActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ContractInfo> call, Throwable t) {
                 pgH.dismiss();
+                Toast.makeText(InfoCardActivity.this, "Eroare " +t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

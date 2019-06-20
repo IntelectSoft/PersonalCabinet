@@ -26,7 +26,10 @@ public class AssortimentList extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootViewAdmin = inflater.inflate(R.layout.fragment_asortment_contract, container, false);
         LW_Product=rootViewAdmin.findViewById(R.id.LW_assortmentContract);
-        adapterProductList = new SimpleAdapter(getActivity(),arrayProductList,R.layout.array_list_contracts,new String[]{"Code","Name"},new int[]{R.id.txtCode_contracts,R.id.txtName_contracts});
+        adapterProductList = new SimpleAdapter(getActivity(),arrayProductList,R.layout.array_list_contracts,new String[]{"Code","Name"},new int[]{R.id.txtName_of_price,R.id.txtPrice_of_price});
+
+        String pdf = getArguments().getString("pdf");
+        int i = 9;
         return rootViewAdmin;
     }
 }

@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -32,29 +33,33 @@ public class MyCardsPage extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootViewAdmin = inflater.inflate(R.layout.fragment_my_cards, container, false);
-        SharedPreferences Client =getActivity().getSharedPreferences("SaveClient", MODE_PRIVATE);
-        String SID = Client.getString("SID","0");
-        String ID_contract = Client.getString("ID_Contract","0");
+        TextView txt = rootViewAdmin.findViewById(R.id.textViewmyCads);
 
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(3, TimeUnit.MINUTES)
-                .readTimeout(4, TimeUnit.MINUTES)
-                .writeTimeout(2, TimeUnit.MINUTES)
-                .build();
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .client(okHttpClient)
-                .build();
 
-        ServiceGetContractInfo gerritAPI = retrofit.create(ServiceGetContractInfo.class);
-
-        Call<ContractInfo> callContractInfo = gerritAPI.getContractInfo(SID,ID_contract);
-        getCardInfo(callContractInfo);
+//        SharedPreferences Client =getActivity().getSharedPreferences("SaveClient", MODE_PRIVATE);
+//        String SID = Client.getString("SID","0");
+//        String ID_contract = Client.getString("ID_Contract","0");
+//
+//        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+//                .connectTimeout(3, TimeUnit.MINUTES)
+//                .readTimeout(4, TimeUnit.MINUTES)
+//                .writeTimeout(2, TimeUnit.MINUTES)
+//                .build();
+//        Gson gson = new GsonBuilder()
+//                .setLenient()
+//                .create();
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(BASE_URL)
+//                .addConverterFactory(GsonConverterFactory.create(gson))
+//                .client(okHttpClient)
+//                .build();
+//
+//        ServiceGetContractInfo gerritAPI = retrofit.create(ServiceGetContractInfo.class);
+//
+//        Call<ContractInfo> callContractInfo = gerritAPI.getContractInfo(SID,ID_contract);
+//        getCardInfo(callContractInfo);
         return rootViewAdmin;
     }
     private void getCardInfo(final Call<ContractInfo> autent) {

@@ -27,6 +27,9 @@ public class AutentificateUser {
     @SerializedName("User")
     @Expose
     private String user;
+    @SerializedName("Phone")
+    @Expose
+    private String Phone;
 
     public Integer getAuthType() {
         return authType;
@@ -42,6 +45,14 @@ public class AutentificateUser {
 
     public void setIDNO(String iDNO) {
         this.iDNO = iDNO;
+    }
+
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setPhone(String Phone) {
+        this.Phone = Phone;
     }
 
     public String getPassword() {
