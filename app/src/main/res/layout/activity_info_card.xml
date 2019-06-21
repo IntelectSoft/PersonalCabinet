@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InfoCardActivity">
+    tools:context=".InfoContractActivity">
 
     <TextView
         android:id="@+id/textView4"
@@ -199,7 +199,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtStatusContract" />
 
     <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayout"
+        android:id="@+id/tabLayout_Asl_OR_cards"
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginTop="8dp"
@@ -226,6 +226,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout_Asl_OR_cards" />
 
 </android.support.constraint.ConstraintLayout>

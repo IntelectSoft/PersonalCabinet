@@ -1,18 +1,21 @@
 package edi.md.pecomobile;
 
-import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,11 +27,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.jar.Attributes;
 
 import edi.md.pecomobile.ContractDetail.AssortimentList;
+import edi.md.pecomobile.ContractDetail.CardList;
 import edi.md.pecomobile.NetworkUtils.ContractInfo.CardsList;
 import edi.md.pecomobile.NetworkUtils.ContractInfo.Contract;
 import edi.md.pecomobile.NetworkUtils.ContractInfo.ContractInfo;
 import edi.md.pecomobile.NetworkUtils.ContractInfo.ProductsList;
 import edi.md.pecomobile.ServiceApi.ServiceGetContractInfo;
+import edi.md.pecomobile.adapters.ViewPageAdapterContractDetail;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,10 +41,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class InfoCardActivity extends AppCompatActivity {
+public class InfoContractActivity extends AppCompatActivity {
     ProgressDialog pgH;
     final String BASE_URL = "http://178.168.80.129:1915";
     ArrayList<HashMap<String,Object>> arrayProductList =new ArrayList<>();
+
+    private ViewPageAdapterContractDetail mSectionsPagerAdapter;
+    private ViewPager mViewPager;
 
     TextView txtCodContract,txtValidTo,txtValidFrom,txtBalanceContract,txtStatus,txtPaymentDelay,txtBonus;
     @Override
@@ -55,6 +63,12 @@ public class InfoCardActivity extends AppCompatActivity {
         txtStatus=findViewById(R.id.txtStatusContract);
         txtPaymentDelay=findViewById(R.id.txtPaymentDelay);
         txtBonus=findViewById(R.id.txtBonusContract);
+
+        mViewPager = (ViewPager) findViewById(R.id.ViewPageContract);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout_Asl_OR_cards);
+
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
         pgH.setMessage("loading..");
         pgH.setIndeterminate(true);
@@ -97,6 +111,12 @@ public class InfoCardActivity extends AppCompatActivity {
                         double CardsBalance = contract.getCardsBalance();
                         String Code = contract.getCode();
                         String DateValidFrom = contract.getDateValidFrom();
+                        String DateValidTo =contract.getDateValidTo();
+                        int PaymentDelay = contract.getPaymentDelay();
+                        int Status = contract.getStatus();
+                        List<ProductsList> productList = contract.getProductsList();
+                        List<CardsList> cardsList = contract.getCardsList();
+
                         if(DateValidFrom!=null) {
                             if (DateValidFrom != null)
                                 DateValidFrom = DateValidFrom.replace("/Date(", "");
@@ -107,14 +127,13 @@ public class InfoCardActivity extends AppCompatActivity {
                             if (DateValidFrom != null)
                                 DateValidFrom = DateValidFrom.replace(")/", "");
                         }
-                            long timeFrom = Long.parseLong(DateValidFrom);
-                            Date dateFrom = new Date(timeFrom);
-                            SimpleDateFormat sdfChisinau = new SimpleDateFormat("yyyy.MM.dd");
-                            TimeZone tzInChisinau = TimeZone.getTimeZone("Europe/Chisinau");
-                            sdfChisinau.setTimeZone(tzInChisinau);
-                            DateValidFrom = sdfChisinau.format(dateFrom);
+                        long timeFrom = Long.parseLong(DateValidFrom);
+                        Date dateFrom = new Date(timeFrom);
+                        SimpleDateFormat sdfChisinau = new SimpleDateFormat("yyyy.MM.dd");
+                        TimeZone tzInChisinau = TimeZone.getTimeZone("Europe/Chisinau");
+                        sdfChisinau.setTimeZone(tzInChisinau);
+                        DateValidFrom = sdfChisinau.format(dateFrom);
 
-                        String DateValidTo =contract.getDateValidTo();
                         if(DateValidTo!=null) {
                             if (DateValidTo != null)
                                 DateValidTo = DateValidTo.replace("/Date(", "");
@@ -129,35 +148,53 @@ public class InfoCardActivity extends AppCompatActivity {
                         Date dateTo = new Date(timeTo);
                         DateValidTo = sdfChisinau.format(dateTo);
 
+                        JSONArray listProduct = new JSONArray();
+                        JSONArray listCards = new JSONArray();
 
-                        int PaymentDelay = contract.getPaymentDelay();
-                        int Status = contract.getStatus();
-
-                        List<CardsList> cardsList = contract.getCardsList();
-
-                        List<ProductsList> productList = contract.getProductsList();
                         for(ProductsList list:productList){
+                            JSONObject new_product = new JSONObject();
                             String NameProduct = list.getName();
                             String GroupProduct = list.getGroup();
                             String IDProduct = list.getID();
                             Double PriceProduct=list.getPrice();
                             String CodeProduct = list.getCode();
-                            HashMap<String,Object> product = new HashMap<>();
-                            product.put("Name",NameProduct);
-                            product.put("Group",GroupProduct);
-                            product.put("ID",IDProduct);
-                            product.put("Price",PriceProduct);
-                            product.put("Code",CodeProduct);
-                            arrayProductList.add(product);
+                            Double DiscountProduct = list.getDiscount();
+                            try {
+                                new_product.put("Name",NameProduct);
+                                new_product.put("Group",GroupProduct);
+                                new_product.put("ID",IDProduct);
+                                new_product.put("Price",PriceProduct);
+                                new_product.put("Code",CodeProduct);
+                                new_product.put("Discount",DiscountProduct);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            listProduct.put(new_product);
                         }
 
-                        Fragment asortment = new AssortimentList();
-                        if (asortment!=null){
-                            Bundle bundle = new Bundle();
-                            bundle.putString("pdf", "pdf");
-                            bundle.putString("flag", "0");
-                            asortment.setArguments(bundle);
+                        for (CardsList cards:cardsList){
+                            JSONObject new_card = new JSONObject();
+                            String CodeCard = cards.getCode();
+                            int LimitType = cards.getLimitType();
+                            double BalanceAccountCard = cards.getBalanceAccountCard();
+                            String NameCards = cards.getName();
+                            boolean IsActiveCards = cards.getIsActive();
+
+                            try {
+                                new_card.put("Code",CodeCard);
+                                new_card.put("LimitType",LimitType);
+                                new_card.put("BalanceAccountCard",BalanceAccountCard);
+                                new_card.put("Name", NameCards);
+                                new_card.put("IsActive",IsActiveCards);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            listCards.put(new_card);
                         }
+
+                        mSectionsPagerAdapter = new ViewPageAdapterContractDetail(getSupportFragmentManager(),listProduct.toString(), listCards.toString());
+                        mViewPager.setAdapter(mSectionsPagerAdapter);
+
                         txtBalanceContract.setText(String.format("%.2f",CardsBalance));
                         txtCodContract.setText(Code);
                         txtValidFrom.setText(DateValidFrom);
@@ -175,7 +212,7 @@ public class InfoCardActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ContractInfo> call, Throwable t) {
                 pgH.dismiss();
-                Toast.makeText(InfoCardActivity.this, "Eroare " +t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(InfoContractActivity.this, "Eroare " +t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

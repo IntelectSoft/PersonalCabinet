@@ -84,7 +84,7 @@ public class CabinetPage extends Fragment {
 
         array = new ArrayList<>();
 
-        adapter = new SimpleAdapter(getContext(),array,R.layout.array_list_contracts,new String[]{"Code","Name"},new int[]{R.id.txtName_of_price,R.id.txtPrice_of_price});
+        adapter = new SimpleAdapter(getContext(),array,R.layout.array_list_of_contracts,new String[]{"Code","Name"},new int[]{R.id.txtName_of_price,R.id.txtPrice_of_price});
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categories_spiner);
 
         boolean receivedClientInfo = ((GlobalVariable) getActivity().getApplication()).getClientInfoReceived();
@@ -136,7 +136,7 @@ public class CabinetPage extends Fragment {
             Contracts_Code = Client.getString("Code_Contracts","--");
             Contracts_Name = Client.getString("Name_Contracts","--");
             Contracts_ID = Client.getString("ID_Contract","0");
-            if(Contracts_ID.equals("0")){
+            if(!Contracts_ID.equals("0")){
                 listContracts = new HashMap<>();
                 listContracts.put("Name",Contracts_Name);
                 listContracts.put("Code",Contracts_Code);

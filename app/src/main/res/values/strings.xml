@@ -7,7 +7,7 @@
     <string name="prompt_login">Login</string>
     <string name="prompt_idno">IDNO</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in">Intra</string>
     <string name="prompt_telephone">Telefon</string>
-    <string name="prompt_Pin">Pin</string>
+    <string name="prompt_Pin">Password</string>
 </resources>

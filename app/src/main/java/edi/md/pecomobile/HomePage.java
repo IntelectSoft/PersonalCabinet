@@ -10,14 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import edi.md.pecomobile.adapters.ViewPageAdapterHome;
 import edi.md.pecomobile.home_screen.NewsPage;
 import edi.md.pecomobile.home_screen.PricePage;
 import edi.md.pecomobile.home_screen.PromoPage;
 
 public class HomePage extends Fragment {
-    private ViewPageAdapterHome mSectionsPagerAdapter;
-    private ViewPager mViewPager;
+
     Fragment News,Promo,Price;
     TabLayout tabLayout;
     @Nullable
