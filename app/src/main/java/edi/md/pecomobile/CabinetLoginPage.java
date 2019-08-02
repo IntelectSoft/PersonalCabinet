@@ -18,7 +18,7 @@ public class CabinetLoginPage extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootViewAdmin = inflater.inflate(R.layout.fragment_cabinet_login, container, false);
-
+//Adden new branch
         Fizic = new FizicTab();
         juridic = new JuridicTab();
         TabLayout tabLayout = (TabLayout) rootViewAdmin.findViewById(R.id.tb_login_items);
