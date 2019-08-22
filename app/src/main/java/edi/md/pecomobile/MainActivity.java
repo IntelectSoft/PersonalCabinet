@@ -2,11 +2,14 @@ package edi.md.pecomobile;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.annotation.NonNull;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,19 +21,25 @@ import edi.md.pecomobile.LoginPage.SwitchAddAccount;
 import edi.md.pecomobile.ServiceApi.GlobalVariable;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView mTextMessage;
+    private TextView mTextMessage,mTextViewHome,mTextViewMyCards,mTextViewMap,mTextViewSettings;
     ImageView img_logo;
     BottomNavigationView navView;
     ViewPager viewPager;
     JSONArray UsersList;
     int countUsers;
 
+    boolean mHomeClicked, mMyCardsClicked,mMapClicked,mSettingsClicked;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        navView = findViewById(R.id.nav_view);
-        img_logo=findViewById(R.id.img_logo);
+
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+
+
+        navView = findViewById(R.id.bottom_navigation);
 
         SharedPreferences USER_Auth =getSharedPreferences("UsersData", MODE_PRIVATE);
         boolean user_auth = USER_Auth.getBoolean("UserAuth",false);
@@ -44,12 +53,10 @@ public class MainActivity extends AppCompatActivity {
         }
         countUsers=UsersList.length();
 
-        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        getSupportFragmentManager().beginTransaction().replace(R.id.frm_layaout,new HomePage()).commit();
+
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -77,9 +84,10 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment=new MapsPage();
                     break;
             }
-            if (selectedFragment!=null)
-                getSupportFragmentManager().beginTransaction().replace(R.id.frm_layaout,selectedFragment).commit();
+            //if (selectedFragment!=null)
+                //getSupportFragmentManager().beginTransaction().replace(R.id.frm_layaout,selectedFragment).commit();
             return true;
         }
     };
+
 }

@@ -1,22 +1,13 @@
 package edi.md.pecomobile.adapters;
 
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import edi.md.pecomobile.ContractDetail.AssortimentList;
 import edi.md.pecomobile.ContractDetail.CardList;
-import edi.md.pecomobile.HomePage;
-import edi.md.pecomobile.NetworkUtils.ContractInfo.ProductsList;
-import edi.md.pecomobile.home_screen.NewsPage;
-import edi.md.pecomobile.home_screen.PricePage;
-import edi.md.pecomobile.home_screen.PromoPage;
 
 public class ViewPageAdapterContractDetail extends FragmentPagerAdapter {
     String products,cards;
