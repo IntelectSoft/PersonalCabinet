@@ -3,9 +3,9 @@ package edi.md.pecomobile.LoginPage;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -146,7 +146,7 @@ public class FizicTab extends Fragment {
                         sPrefInput.apply();
                         pgBar.setVisibility(View.INVISIBLE);
                         ((GlobalVariable) getActivity().getApplication()).setLoginAutentificate(true);
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frm_layaout,new CabinetPage()).commit();
+                        //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frm_layaout,new CabinetPage()).commit();
                     }else{
                         sPrefInput.putBoolean("UserAuth",false);
                         sPrefInput.apply();

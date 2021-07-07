@@ -2,10 +2,10 @@ package edi.md.pecomobile;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.tabs.TabLayout;
+
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,10 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
-import java.util.jar.Attributes;
 
-import edi.md.pecomobile.ContractDetail.AssortimentList;
-import edi.md.pecomobile.ContractDetail.CardList;
 import edi.md.pecomobile.NetworkUtils.ContractInfo.CardsList;
 import edi.md.pecomobile.NetworkUtils.ContractInfo.Contract;
 import edi.md.pecomobile.NetworkUtils.ContractInfo.ContractInfo;

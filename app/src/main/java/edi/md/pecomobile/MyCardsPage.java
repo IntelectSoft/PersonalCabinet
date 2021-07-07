@@ -1,31 +1,19 @@
 package edi.md.pecomobile;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.util.concurrent.TimeUnit;
-
 import edi.md.pecomobile.NetworkUtils.ContractInfo.Contract;
 import edi.md.pecomobile.NetworkUtils.ContractInfo.ContractInfo;
-import edi.md.pecomobile.ServiceApi.ServiceGetContractInfo;
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class MyCardsPage extends Fragment {
     final String BASE_URL = "http://178.168.80.129:1915";
